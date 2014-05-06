@@ -1,0 +1,15 @@
+.env
+.DS_Store
+*.swp
+test-results.xml
+/.sass-cache
+/obj
+/node_modules
+/bower_components
+/public/index.html
+/public/js
+/public/css
+/public/fonts
+/public/swf
+/public/svg
+/target
