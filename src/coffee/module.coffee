@@ -1,0 +1,1 @@
+bakken = angular.module "bakken", []
