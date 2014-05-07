@@ -25,7 +25,12 @@ module.exports = function() {
   grunt.initConfig({
 
     clean: {
-      all: ['obj', 'public']
+      all: [
+        'obj', 
+        'public/js', 
+        'public/css', 
+        'public/index.html',
+      ]
     },
 
     coffee: {
