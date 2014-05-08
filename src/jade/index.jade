@@ -1,5 +1,9 @@
 doctype html
-html(ng-app="brakken")
-head
-  title Hello World
-body
+html(ng-app="bakken")
+  head
+    title(rb-title) Ricky Bakken
+    link(rel='stylesheet', href='/css/app.css', type='text/css')
+  body
+    .page
+      div(ng-view)
+    script(type='text/javascript', src='/js/app.js')

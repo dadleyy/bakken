@@ -1,1 +1,1 @@
-bakken = angular.module "bakken", []
+bakken = angular.module "bakken", ['ngRoute', 'ngResource']
