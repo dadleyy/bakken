@@ -7,6 +7,7 @@ module.exports = function() {
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-smash');
 
@@ -56,7 +57,7 @@ module.exports = function() {
         src: ['obj/html/directives/*.html', 'obj/html/views/*.html'],
         dest: 'obj/js/templates.js',
         options: {
-          module: 'brakken',
+          module: 'bakken',
           url: function(url) { 
             return url.replace(/^obj\/html\/(.*)\/(.*)\.html$/,'$1.$2');
           }
@@ -90,11 +91,28 @@ module.exports = function() {
       templates: {
         files: ['src/jade/**/*.jade'],
         tasks: ['jade:debug', 'copy:index', 'ngtemplates', 'smash']
+      },
+      sass: {
+        files: ['src/sass/**/*.sass'],
+        tasks: ['sass']
       }
-    }
+    },
+
+    sass: {
+      build: {
+        options: {
+          loadPath: require('node-neat').includePaths
+        },
+        files: {
+          'public/css/app.css': 'src/sass/app.sass'
+        }
+      }
+    },
 
   });
-
-  grunt.registerTask('default', ['clean:all', 'coffee', 'jade:debug', 'ngtemplates', 'smash', 'copy']);
+  
+  grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'smash']);
+  grunt.registerTask('css', ['sass']);
+  grunt.registerTask('default', ['js', 'css', 'copy']);
 
 };
