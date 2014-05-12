@@ -10,4 +10,5 @@ install:
   - bower install
   - npm install
 script:
+  - echo "SOUNDCLOUD_KEY=thisisnotarealkey" > .env
   - grunt

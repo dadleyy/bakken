@@ -1,6 +1,10 @@
-var grunt = require('grunt');
+var grunt = require('grunt'),
+    dotenv = require('dotenv'),
+    btoa = require('btoa');
 
 module.exports = function() {
+
+  dotenv.load();
 
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -10,6 +14,7 @@ module.exports = function() {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-smash');
+  grunt.loadTasks('tasks');
 
   function jadeFiles(srcdir, destdir, wildcard) {
     var path = require('path'),
@@ -41,7 +46,7 @@ module.exports = function() {
           join: true
         },
         files: {
-          'obj/js/app.js': ['src/coffee/**/*.coffee']
+          'obj/js/app.js': ['src/coffee/module.coffee', 'src/coffee/**/*.coffee']
         }
       }
     },
@@ -109,9 +114,18 @@ module.exports = function() {
       }
     },
 
+    keyfile: {
+      soundcloud: {
+        dest: "obj/js/soundcloud.js",
+        module: "bakken",
+        name: "SAK",
+        key: btoa(process.env['SOUNDCLOUD_KEY'])
+      }
+    }
+
   });
   
-  grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'smash']);
+  grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'smash']);
   grunt.registerTask('css', ['sass']);
   grunt.registerTask('default', ['js', 'css', 'copy']);
 
