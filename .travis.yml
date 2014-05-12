@@ -1,3 +1,13 @@
 language: node_js
 node_js:
   - "0.10"
+install:
+  - gem install sass
+  - gem install bourbon
+  - gem install neat 
+  - npm install bower -g
+  - npm install grunt-cli -g
+  - bower install
+  - npm install
+script:
+  - grunt
