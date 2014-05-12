@@ -2,8 +2,10 @@ doctype html
 html(ng-app="bakken")
   head
     title(rb-title) Ricky Bakken
+    link(rel='stylesheet', href='/fonts/include.css', type='text/css')
     link(rel='stylesheet', href='/css/app.css', type='text/css')
   body
+    .splash(rb-splash)
     .page
       div(ng-view)
     script(type='text/javascript', src='/js/app.js')

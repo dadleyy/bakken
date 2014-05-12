@@ -1,13 +1,20 @@
-bakken.service "SoundcloudAPI", ['$resource', ($resource) ->
+bakken.service "SoundcloudAPI", ['$resource', 'SAK', ($resource, SAK) ->
   
-  user_actions = 
-    tracks: 
-      method: 'GET'
+  api_base = 'http://api.soundcloud.com'
 
-  user_url = 'api.soundcloud.com'
-  user_params = { }
+  default_params =
+    client_id: SAK
+    format: 'json'
 
-  User = $resource user_url, user_params, user_actions
+  user_url = [api_base, '/users/:id/:fn.:format'].join('')
+
+  user_params = angular.extend default_params
+
+  User = $resource user_url, user_params,
+    tracks:
+      method: 'GET',
+      params:
+        fn: 'tracks'
 
   SoundcloudAPI =
     User: User
