@@ -1,4 +1,4 @@
-bakken.directive 'rbSplash', [() ->
+bakken.directive 'rbSplash', ['$window', ($window) ->
 
   rbSplash =
     scope: false

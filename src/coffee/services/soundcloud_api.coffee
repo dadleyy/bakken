@@ -12,7 +12,8 @@ bakken.service "SoundcloudAPI", ['$resource', 'SAK', ($resource, SAK) ->
 
   User = $resource user_url, user_params,
     tracks:
-      method: 'GET',
+      method: 'GET'
+      isArray: true
       params:
         fn: 'tracks'
 
