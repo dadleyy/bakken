@@ -129,6 +129,6 @@ module.exports = function() {
   
   grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'smash']);
   grunt.registerTask('css', ['sass']);
-  grunt.registerTask('default', ['css']); //['js', 'css', 'copy']);
+  grunt.registerTask('default', ['css', 'coffee']); //['js', 'css', 'copy']);
 
 };
