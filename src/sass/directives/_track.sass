@@ -1,2 +1,64 @@
-.track
+[rb-track], .track
+  +transition(all 500ms ease)
+  +transform-origin(center top)
+  +transform(translateY(50px) rotateX(90deg))
   opacity: 0.0
+  background: #fafafa
+  position: relative
+  width: 100%
+  height: 220px
+  overflow: hidden 
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.25), inset 0px 1px 0px white
+
+  &.reveal
+    +transform(translateY(0px) rotateX(0deg))
+    opacity: 1.0
+
+  .pre, .post
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0px
+    left: 0px
+  .pre
+    .title-container
+      display: table
+      height: 110px
+      width: 100%
+
+      .title
+        display: table-cell
+        text-align: center
+        vertical-align: middle
+
+      h2
+        font-size: 20px
+
+    .actions
+      position: absolute
+      width: 100%
+      top: 50%
+      padding: 20px 0 0 0
+      left: 0px
+      text-align: center
+      .action
+        box-shadow: inset 0px 0px 1px rgba(0,0,0,0.25), 0px 0px 1px 0px white
+        +transition(all 400ms ease)
+        &:nth-child(1)
+          +transition(all 600ms ease)
+        &:nth-child(2)
+          +transition(all 500ms ease)
+        +transform(translateY(20px))
+        opacity: 0.0
+        width: 30px
+        height: 30px
+        border-radius: 20px
+        background: #414141
+        display: inline-block
+        margin: 0 5px
+
+  &:hover
+    .pre .actions .action
+      +transform(translateY(0px))
+      opacity: 1.0
+

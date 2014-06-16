@@ -1,2 +1,4 @@
 .discography
-  .track(ng-repeat="track in tracks")
+  .track-container(ng-repeat="track in tracks")
+    .track(rb-track track="track" index="$index")
+

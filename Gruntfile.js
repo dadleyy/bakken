@@ -4,7 +4,7 @@ var grunt = require('grunt'),
 
 module.exports = function() {
 
-  //dotenv.load();
+  dotenv.load();
 
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -46,7 +46,11 @@ module.exports = function() {
           join: true
         },
         files: {
-          'obj/js/app.js': ['src/coffee/module.coffee', 'src/coffee/**/*.coffee']
+          'obj/js/app.js': [
+            'bower_components/waveform/views/waveform.coffee',
+            'src/coffee/module.coffee', 
+            'src/coffee/**/*.coffee'
+          ]
         }
       }
     },
@@ -112,9 +116,8 @@ module.exports = function() {
           'public/css/app.css': 'src/sass/app.sass'
         }
       }
-    }
+    },
 
-    /*
     keyfile: {
       soundcloud: {
         dest: "obj/js/soundcloud.js",
@@ -123,12 +126,11 @@ module.exports = function() {
         key: btoa(process.env['SOUNDCLOUD_KEY'])
       }
     }
-    */
 
   });
   
   grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'smash']);
   grunt.registerTask('css', ['sass']);
-  grunt.registerTask('default', ['css', 'coffee']); //['js', 'css', 'copy']);
+  grunt.registerTask('default', ['css', 'coffee', 'js', 'css', 'copy']);
 
 };
