@@ -5,6 +5,15 @@ body
 .tight
   letter-spacing: -0.10em
 
+a
+  +transition(color 400ms ease, text-shadow 400ms ease)
+  color: $color-links
+  text-decoration: none
+  font-family: $font-regular
+  &:hover
+    color: darken($color-links, 5%)
+    text-shadow: 0px 0px 1px lighten($color-links, 10%)
+
 h1
   font-size: $font-larger
 
