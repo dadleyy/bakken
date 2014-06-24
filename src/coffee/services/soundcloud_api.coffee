@@ -16,6 +16,11 @@ bakken.service "SoundcloudAPI", ['$resource', 'SAK', ($resource, SAK) ->
       isArray: true
       params:
         fn: 'tracks'
+    playlists:
+      method: 'GET'
+      isArray: true
+      params:
+        fn: 'playlists'
 
   SoundcloudAPI =
     User: User
