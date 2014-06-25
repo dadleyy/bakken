@@ -11,17 +11,12 @@ bakken.config ['$routeProvider', ($routeProvider) ->
         user = SoundcloudAPI.User.get user_params
         # user.$promise
       ]
-      Tracks: ['SoundcloudAPI', 'USER_ID', (SoundcloudAPI, USER_ID) ->
-        user_params =
-          id: USER_ID
-        
-        tracks = SoundcloudAPI.User.tracks user_params
-      ]
       Playlists: ['SoundcloudAPI', 'USER_ID', (SoundcloudAPI, USER_ID) ->
         user_params =
           id: USER_ID
 
         playlists = SoundcloudAPI.User.playlists user_params
+        playlists.$promise
       ]
 
   $routeProvider.when '/', homeRoute

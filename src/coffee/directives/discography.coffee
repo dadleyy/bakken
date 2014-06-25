@@ -4,7 +4,7 @@ bakken.directive 'rbDiscography', [() ->
     restrict: 'EA'
     replace: true
     scope:
-      tracks: '='
+      playlists: '='
     templateUrl: 'directives.discography'
     link: ($scope, $element, $attrs) ->
 

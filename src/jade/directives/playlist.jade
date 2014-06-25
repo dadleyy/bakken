@@ -1,0 +1,7 @@
+.playlist
+  .title-area
+    h1 {{ playlist.title }}
+  .art-area
+  .track-area
+    .track-container(ng-repeat="track in playlist.tracks")
+      .track(rb-track track="track")

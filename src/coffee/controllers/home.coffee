@@ -1,5 +1,5 @@
-bakken.controller 'HomeController', ['$scope', 'Tracks', ($scope, Tracks) ->
+bakken.controller 'HomeController', ['$scope', 'Playlists', ($scope, Playlists) ->
 
-  $scope.tracks = Tracks
+  $scope.playlists = Playlists 
 
 ]
