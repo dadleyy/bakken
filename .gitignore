@@ -1,6 +1,7 @@
 .env
 .DS_Store
 *.swp
+.ruby-version
 test-results.xml
 /.sass-cache
 /obj
