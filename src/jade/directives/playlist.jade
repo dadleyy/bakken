@@ -1,6 +1,8 @@
 .playlist
   .title-area
-    h1 {{ playlist.title }}
+    .playlist-image(rb-playlist-image playlist="playlist")
+    .title-container
+      h1.title {{ playlist.title }}
   .art-area
   .track-area
     .track-container(ng-repeat="track in playlist.tracks")
