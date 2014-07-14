@@ -1,6 +1,11 @@
-# Bakken ![build](https://api.travis-ci.org/dadleyy/bakken.svg)
+# Bakken [![Build Status](https://travis-ci.org/dadleyy/bakken.svg?branch=master)](https://travis-ci.org/dadleyy/bakken)
 
+The personal website for a talented bassist. 
 
+## Building
 
-
-The personal website for a talented bassist.
+```
+> npm install
+> bower install
+> grunt
+```
