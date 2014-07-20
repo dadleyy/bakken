@@ -1,9 +1,12 @@
-.playlist
-  .title-area
-    .playlist-image(rb-playlist-image, playlist="playlist")
-    .title-container
-      h1.title {{ playlist.title }}
-  .art-area
-  .track-area
-    .track-container(ng-repeat="track in playlist.tracks")
-      .track(rb-track track="track")
+.playlist(ng-class="{viewable: ready}")
+  .loader
+    .spinner(rb-spinner)
+  .inner
+    .title-area
+      .playlist-image(rb-playlist-image, playlist="playlist")
+      .title-container
+        h1.title {{ playlist.title }}
+    .art-area
+    .track-area
+      .track-container(ng-repeat="track in playlist.tracks")
+        .track(rb-track track="track")

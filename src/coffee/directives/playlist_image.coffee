@@ -53,19 +53,18 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     restrict: 'AE'
     replace: true
     templateUrl: 'directives.playlist_image'
+    require: '^rbPlaylist'
     scope:
       playlist: '='
-    link: ($scope, $element, $attrs) ->
+    link: ($scope, $element, $attrs, trackController) ->
       canvas = document.createElement 'canvas'
       active_image = 0
-      first_load = true
       resize_timeout = null
 
       $element.append canvas
 
       makeViewable = () ->
-        first_load = false
-        $scope.viewable = true
+        trackController.initialize()
 
       draw = () ->
         element = $element[0].parentNode

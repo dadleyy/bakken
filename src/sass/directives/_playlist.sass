@@ -1,15 +1,37 @@
 .playlist
   position: relative
-  border: 10px solid #f0f0f0
-  z-index: 10
-  .playlist-image
-    background: white
-    canvas
-      +transition(all 500ms ease)
+
+  .loader
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0px
+    left: 0px
+    z-index: 9
+
+  .inner
+    +transition(all 1200ms ease)
+    +transform(translateY(50px))
+    position: relative
+    border: 10px solid #f0f0f0
+    z-index: 10
+    opacity: 0.0
+
+  &.viewable
+    .loader 
       opacity: 0.0
-    &.viewable
-      canvas
-        opacity: 1.0
+    .inner
+      +transform(translateY(0px))
+      opacity: 1.0
+
+  .playlist-image
+    +transition(all 500ms ease)
+    background: white
+    opacity: 1.0
+
+  &:hover
+    .playlist-image
+      opacity: 0.0
 
   .title-area
     position: absolute
