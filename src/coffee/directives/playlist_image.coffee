@@ -1,4 +1,7 @@
-bakken.directive 'rbPlaylistImage', ['$timeout', 'Viewport', ($timeout, Viewport) ->
+bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q, Viewport) ->
+
+  image_cache = {}
+  blur_filter = new createjs.BlurFilter 25, 25, 10
 
   cleanImageUrl = (url) ->
     original = url.replace /large/gi, 'original'
@@ -12,32 +15,49 @@ bakken.directive 'rbPlaylistImage', ['$timeout', 'Viewport', ($timeout, Viewport
       images.push(cleanImageUrl(track.artwork_url)) for track in playlist.tracks
       images
 
-  drawPlaylistImages = (canvas, image_list) ->
+  drawImage = (canvas, active_image) ->
+    deffered = $q.defer()
+
     context = canvas.getContext '2d'
     width = canvas.width
     height = canvas.height
-    block_width = width / image_list.length
-    block_height = height
+    x = 0
+    y = 0
 
-    drawImage = (image_url, indx) ->
+    render = (image_ele) ->
+      context.drawImage image_ele, x, y, width, height
+      blur_filter.applyFilter context, x, y, width, height
+
+    if !image_cache[active_image]
       image_ele = new Image()
-      image_ele.src = image_url
+      image_ele.src = active_image
+      image_cache[active_image] = image_ele
       image_ele.onload = () ->
-        y = 0
-        x = block_width * indx
-        context.drawImage image_ele, x, y, block_width, block_height
-        image_data = context.getImageData x, y, block_width, block_height
-
-    drawImage image, i for image, i in image_list
+        render(image_ele)
+        deffered.resolve()
+    else
+      render image_cache[active_image]
+      deffered.resolve()
+      
     
+    deffered.promise
 
   rbPlaylistImage =
-    restrict: 'A'
+    restrict: 'AE'
+    replace: true
+    templateUrl: 'directives.playlist_image'
     scope:
       playlist: '='
     link: ($scope, $element, $attrs) ->
       canvas = document.createElement 'canvas'
+      active_image = 0
+      first_load = true
+
       $element.append canvas
+
+      makeViewable = () ->
+        first_load = false
+        $scope.viewable = true
 
       draw = () ->
         element = $element[0].parentNode
@@ -48,7 +68,11 @@ bakken.directive 'rbPlaylistImage', ['$timeout', 'Viewport', ($timeout, Viewport
         playlist = $scope.playlist
 
         image_urls = getPlaylistImageList playlist
-        drawPlaylistImages canvas, image_urls
+        promise = drawImage canvas, image_urls[active_image]
+
+        if first_load
+          promise.then makeViewable
+
 
       $timeout draw
       Viewport.addListener draw

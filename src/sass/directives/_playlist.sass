@@ -2,6 +2,14 @@
   position: relative
   border: 10px solid #f0f0f0
   z-index: 10
+  .playlist-image
+    background: white
+    canvas
+      +transition(all 500ms ease)
+      opacity: 0.0
+    &.viewable
+      canvas
+        opacity: 1.0
 
   .title-area
     position: absolute
