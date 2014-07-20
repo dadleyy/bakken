@@ -33,7 +33,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     render = (image_ele) ->
       context.drawImage image_ele, x, y, width, height
       blur_filter.applyFilter context, x, y, width, height
-      color_filter.applyFilter context, x, y, width, height
+      #color_filter.applyFilter context, x, y, width, height
 
     if !image_cache[active_image]
       image_ele = new Image()
@@ -59,6 +59,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       canvas = document.createElement 'canvas'
       active_image = 0
       first_load = true
+      resize_timeout = null
 
       $element.append canvas
 
@@ -79,7 +80,13 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
         promise.then makeViewable
 
 
-      $timeout draw
-      Viewport.addListener draw
+      resize = () ->
+        if resize_timeout != null
+          $timeout.cancel resize_timeout
+
+        resize_timeout = $timeout draw, 100
+
+      timeout_id = $timeout draw
+      Viewport.addListener resize
 
 ]

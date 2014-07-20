@@ -30,8 +30,6 @@ bakken.service 'Loop', ['$window', ($window) ->
     if running
       request run
 
-  console.log request
-
   Loop =
 
     add: (fn) ->
