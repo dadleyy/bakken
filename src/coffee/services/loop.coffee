@@ -8,6 +8,17 @@ bakken.service 'Loop', ['$window', ($window) ->
 
   active_listeners = []
   running = false
+  vendors = ['', 'ms', 'moz', 'webkit', 'o']
+
+  request = (fn) ->
+    $window.setTimeout fn, 33
+
+  for vendor in vendors
+    fn_name = vendor+'RequestAnimationFrame'
+    fn_name = fn_name[0].toLowerCase() + fn_name.substr(1)
+    if $window[fn_name]
+      request = $window[fn_name]
+      break
 
   run = () ->
     if active_listeners.length == 0
@@ -17,7 +28,9 @@ bakken.service 'Loop', ['$window', ($window) ->
         wrapper()
 
     if running
-      $window.setTimeout run, 33
+      request run
+
+  console.log request
 
   Loop =
 
