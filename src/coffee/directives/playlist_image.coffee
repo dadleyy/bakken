@@ -33,7 +33,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     render = (image_ele) ->
       context.drawImage image_ele, x, y, width, height
       blur_filter.applyFilter context, x, y, width, height
-      #color_filter.applyFilter context, x, y, width, height
+      color_filter.applyFilter context, x, y, width, height
 
     if !image_cache[active_image]
       image_ele = new Image()
