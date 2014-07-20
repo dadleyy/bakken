@@ -11,6 +11,7 @@ module.exports = function() {
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-smash');
@@ -57,7 +58,22 @@ module.exports = function() {
 
     jade: {
       debug: {
+        options: {
+          data: {
+            debug: true
+          }
+        },
         files: jadeFiles('src/jade', 'obj/html', '**/*.jade')
+      },
+      release: {
+        options: {
+          data: {
+            debug: false
+          }
+        },
+        files: {
+          'public/index.html': 'src/jade/index.jade'
+        }
       }
     },
 
@@ -125,6 +141,14 @@ module.exports = function() {
         name: "SAK",
         key: btoa(process.env['SOUNDCLOUD_KEY'])
       }
+    },
+
+    uglify: {
+      release: {
+        files: {
+          'public/js/app.min.js': ['public/js/app.js']
+        }
+      }
     }
 
   });
@@ -132,5 +156,6 @@ module.exports = function() {
   grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'smash']);
   grunt.registerTask('css', ['sass']);
   grunt.registerTask('default', ['css', 'coffee', 'js', 'css', 'copy']);
+  grunt.registerTask('release', ['default', 'jade:release', 'uglify']);
 
 };

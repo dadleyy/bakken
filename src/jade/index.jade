@@ -8,4 +8,7 @@ html(ng-app="bakken")
     header(rb-header)
     .page
       div(ng-view)
-    script(type='text/javascript', src='/js/app.js')
+    if debug
+      script(type='text/javascript', src='/js/app.js')
+    else
+      script(type='text/javascript', src='/js/app.min.js')
