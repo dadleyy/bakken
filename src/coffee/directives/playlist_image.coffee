@@ -2,6 +2,12 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
   image_cache = {}
   blur_filter = new createjs.BlurFilter 25, 25, 10
+  color_filter = new createjs.ColorMatrixFilter [
+    0.23,0.23,0.23,0,0,
+    0.23,0.23,0.23,0,0,
+    0.23,0.23,0.23,0,0,
+    0,0,0,1,0
+  ]
 
   cleanImageUrl = (url) ->
     original = url.replace /large/gi, 'original'
@@ -27,6 +33,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     render = (image_ele) ->
       context.drawImage image_ele, x, y, width, height
       blur_filter.applyFilter context, x, y, width, height
+      color_filter.applyFilter context, x, y, width, height
 
     if !image_cache[active_image]
       image_ele = new Image()
@@ -69,9 +76,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
         image_urls = getPlaylistImageList playlist
         promise = drawImage canvas, image_urls[active_image]
-
-        if first_load
-          promise.then makeViewable
+        promise.then makeViewable
 
 
       $timeout draw
