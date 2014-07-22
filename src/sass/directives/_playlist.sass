@@ -11,11 +11,12 @@
 
   .inner
     +transition(all 1200ms ease)
-    +transform(translateY(50px))
+    +transform(translateY(20px))
+    padding: 0
     position: relative
-    border: 10px solid #f0f0f0
     z-index: 10
     opacity: 0.0
+    overflow: hidden
 
   &.viewable
     .loader 
@@ -30,10 +31,16 @@
     opacity: 1.0
 
   &:hover
-    .playlist-image
+    .title-area
       opacity: 0.0
+      top: 100%
+    .track
+      +transform(translateY(0px) rotateX(0deg))
+      opacity: 1.0
 
   .title-area
+    +transition(opacity 500ms ease, top 1000ms ease)
+    opacity: 1.0
     position: absolute
     top: 0
     left: 0
@@ -41,7 +48,7 @@
     height: 100%
     text-align: center
     z-index: 5
-    .title-container
+    .playlist-title-container
       height: 100%
       width: 100%
       display: table
@@ -50,19 +57,48 @@
       top: 0
       left: 0
       .title
-        +text-border(1px, rgba(255,255,255,0.2))
         color: white
         display: table-cell
         vertical-align: middle
 
   .track-area
-    +outer-container
     position: relative
     z-index: 4
+    margin: 5px
+    overflow: hidden
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.25), inset 0px 1px 0px white
     .track-container
-      +span-columns(4)
-      +omega
-      width: 33.33%
+      width: 100%
+      &:nth-child(1)
+        .track
+          +transition(all 1000ms ease 100ms)
+      &:nth-child(2)
+        .track
+          +transition(all 1000ms ease 200ms)
+      &:nth-child(3)
+        .track
+          +transition(all 1000ms ease 300ms)
+      &:nth-child(4)
+        .track
+          +transition(all 1000ms ease 400ms)
+      &:nth-child(5)
+        .track
+          +transition(all 1000ms ease 500ms)
+      &:nth-child(6)
+        .track
+          +transition(all 1000ms ease 600ms)
+      &:nth-child(7)
+        .track
+          +transition(all 1000ms ease 700ms)
+
+
+
+
+
+      &:last-child
+        .track
+          box-shadow: none
+          border: none
 
   .art-area
     position: absolute

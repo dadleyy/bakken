@@ -1,4 +1,17 @@
 [rb-discography], .discography
   +outer-container
-  .playlist
-    margin: 0 0 10px 0
+  position: relative
+  .playlist-container
+    position: absolute
+    width: 50%
+    left: 50%
+    .inner
+      position: relative
+    &:nth-child(odd)
+      > .inner
+        padding-left: 10px
+    &:nth-child(even)
+      left: 0%
+      > .inner
+        padding-right: 10px
+    
