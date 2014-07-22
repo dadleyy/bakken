@@ -14,7 +14,7 @@ bakken.directive 'rbDiscography', [() ->
         else
           pl_above = $scope.playlists[index-2]
           track_count = pl_above.tracks.length
-          top = (track_count * 80) + 20
+          top = (track_count * 80) + 30
           top: [top,'px'].join('')
 
 ]
