@@ -1,5 +1,5 @@
 .discography
   .playlist-container(ng-repeat="playlist in playlists", ng-style="getPlaylistPosition(playlist, $index)")
     .inner
-      .pl(rb-playlist playlist="playlist")
+      .pl(rb-playlist, playlist="playlist", order="$index")
 

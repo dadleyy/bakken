@@ -17,6 +17,7 @@ bakken.directive 'rbPlaylist', [() ->
     controller: PlaylistController
     scope:
       playlist: '='
+      order: '='
     link: ($scope, $element, $attrs) ->
       $scope.ready = false
       d3el = d3.select $element[0]

@@ -1,7 +1,7 @@
 bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q, Viewport) ->
 
   image_cache = {}
-  blur_filter = new createjs.BlurFilter 25, 25, 10
+  blur_filter = new createjs.BlurFilter 25, 25, 2
   color_filter = new createjs.ColorMatrixFilter [
     0.23,0.23,0.23,0,0,
     0.23,0.23,0.23,0,0,
@@ -32,7 +32,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
     render = (image_ele) ->
       context.drawImage image_ele, x, y, width, height
-      blur_filter.applyFilter context, x, y, width, height
+      #blur_filter.applyFilter context, x, y, width, height
       color_filter.applyFilter context, x, y, width, height
 
     if !image_cache[active_image]
@@ -56,6 +56,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     require: '^rbPlaylist'
     scope:
       playlist: '='
+      order: '='
     link: ($scope, $element, $attrs, trackController) ->
       canvas = document.createElement 'canvas'
       active_image = 0
@@ -64,7 +65,10 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       $element.append canvas
 
       makeViewable = () ->
-        trackController.initialize()
+        cb = () ->
+          trackController.initialize()
+
+        $timeout cb, (200 * $scope.order) + 400
 
       draw = () ->
         element = $element[0].parentNode

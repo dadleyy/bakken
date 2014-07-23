@@ -1,9 +1,9 @@
 .playlist(ng-class="{viewable: ready}")
   .loader
-    .spinner(rb-spinner)
+    .spinner(rb-spinner, hidden="ready", width="200", height="200")
   .inner
     .title-area
-      .playlist-image(rb-playlist-image, playlist="playlist")
+      .playlist-image(rb-playlist-image, playlist="playlist", order="order")
       .playlist-title-container
         h1.title {{ playlist.title }}
     .track-area
