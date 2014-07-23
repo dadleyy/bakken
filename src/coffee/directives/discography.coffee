@@ -8,9 +8,6 @@ bakken.directive 'rbDiscography', [() ->
     templateUrl: 'directives.discography'
     link: ($scope, $element, $attrs) ->
 
-      $scope.getIndex = () ->
-        console.log 'mm'
-
       $scope.getPlaylistPosition = (playlist, index) ->
         if index - 2 < 0
           top: '0px'
