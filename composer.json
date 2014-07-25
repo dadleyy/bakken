@@ -1,0 +1,11 @@
+{
+    "name": "dadleyy/bakken",
+    "description": "personal website for a musician",
+    "authors": [
+        {
+            "name": "Danny Hadley",
+            "email": "dadley@sizethreestudios.com"
+        }
+    ],
+    "require": {}
+}
