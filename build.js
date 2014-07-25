@@ -1,6 +1,6 @@
 (function() {
 
-import "bower_components/jquery/dist/jquery"
+import "bower_components/jquery/dist/jquery.min.js"
 import "bower_components/angular/angular"
 import "bower_components/angular-route/angular-route"
 import "bower_components/angular-resource/angular-resource"
