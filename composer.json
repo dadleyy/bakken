@@ -1,11 +1,15 @@
 {
-    "name": "dadleyy/bakken",
-    "description": "personal website for a musician",
-    "authors": [
-        {
-            "name": "Danny Hadley",
-            "email": "dadley@sizethreestudios.com"
-        }
-    ],
-    "require": {}
+  "name": "dadleyy/bakken",
+  "description": "personal website for a musician",
+  "authors": [{
+    "name": "Danny Hadley",
+    "email": "dadley@sizethreestudios.com"
+  }],
+  "autoload": {
+    "classmap": ["api/"]
+  },
+  "require": {
+    "intervention/image": "2.*",
+    "illuminate/http": "*"
+  }
 }

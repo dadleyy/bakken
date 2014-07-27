@@ -1,6 +1,7 @@
 .env
 .DS_Store
 *.swp
+composer.lock
 .ruby-version
 test-results.xml
 /.sass-cache
