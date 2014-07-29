@@ -24,7 +24,8 @@ class App {
     if($image->isValid() == false)
       return static::missing();
 
-    $blur_amt = (int)($request->get('blur') ? $request->get('blur') : 70);
+    $blur_amt = (int)($request->get('blur') ? $request->get('blur') : 170);
+    $response->header('X-Blur-Amt', $blur_amt);
     $image->addFilter($blur_amt);
     $image_data = $image->getData();
 

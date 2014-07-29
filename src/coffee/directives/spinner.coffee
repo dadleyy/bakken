@@ -83,6 +83,7 @@ bakken.directive 'rbSpinner', ['Loop', (Loop) ->
         rotation = 0  if rotation > Math.PI * 2
         path.attr d: p
         path.attr fill: colorFlux(dt)
+
       start = () ->
         if !playing
           playing = true
@@ -90,6 +91,9 @@ bakken.directive 'rbSpinner', ['Loop', (Loop) ->
 
       stop = () ->
         Loop.remove loop_id
+        console.log('wtf')
+        $element.css
+          display: "none"
 
       $scope.$watch 'hidden', toggle
       start()

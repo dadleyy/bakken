@@ -3,6 +3,7 @@
 class Image {
 
   private $image_handle;
+  private $image_name;
   private $valid = false;
 
   function __construct($image_url, $width=800, $height=600) {
@@ -20,6 +21,8 @@ class Image {
 
     $source_width = $source_dimensions[0];
     $source_height = $source_dimensions[1];
+
+    $this->image_name = basename($image_url);
 
     // create image handles for the original, and the new one to be rendered
     $source_image = imagecreatefromjpeg($image_url);
@@ -40,7 +43,7 @@ class Image {
     return $this->valid;
   }
 
-  public function addFilter($amount=20) {
+  public function addFilter($amount=180) {
     if(!$this->valid)
       return false;
 
