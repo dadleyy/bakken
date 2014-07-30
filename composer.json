@@ -10,6 +10,7 @@
   },
   "require": {
     "intervention/image": "2.*",
-    "illuminate/http": "*"
+    "illuminate/http": "*",
+    "illuminate/filesystem": "*"
   }
 }

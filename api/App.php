@@ -24,12 +24,16 @@ class App {
     if($image->isValid() == false)
       return static::missing();
 
-    $blur_amt = (int)($request->get('blur') ? $request->get('blur') : 170);
-    $response->header('X-Blur-Amt', $blur_amt);
-    $image->addFilter($blur_amt);
+    if(!$image->exists()) {
+      $blur_amt = (int)($request->get('blur') ? $request->get('blur') : 170);
+      $response->header('X-Blur-Amt', $blur_amt);
+      $image->addFilter($blur_amt);
+      $image->save();
+    }
+
     $image_data = $image->getData();
 
-    $response->header('Content-Type', 'image/jpeg');
+    $response->header('Content-Type', 'text/plain');
     $response->setContent($image_data);
 
     $image->destroy();

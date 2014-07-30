@@ -1,13 +1,58 @@
 <?php namespace Bakken;
 
+use \Illuminate\Filesystem\Filesystem;
+
 class Image {
 
   private $image_handle;
   private $image_name;
-  private $valid = false;
+  private $image_url;
+  private $width;
+  private $height;
 
   function __construct($image_url, $width=800, $height=600) {
-    $source_dimensions = false;
+    $this->image_handle = false;
+
+    $this->image_url = $image_url;
+    $this->image_name = basename($image_url);
+    $this->width = $width;
+    $this->height = $height;
+
+    if($this->exists())
+      $this->loadLocal();
+    else
+      $this->loadRemote();
+  }
+
+  public function save() {
+    if(!$this->isValid())
+      return false;
+
+    imagejpeg($this->image_handle, $this->filename());
+
+    return true;
+  }
+
+  private function loadLocal() {
+    $this->image_handle = imagecreatefromjpeg($this->filename());
+  }
+
+  public function exists() {
+    $image_path = $this->filename();
+    $fs = new Filesystem();
+    $exists = $fs->exists($image_path);
+    return $exists;
+  }
+
+  private function filename() {
+    $image_name = $this->image_name;
+    return __DIR__.'/../storage/'.$image_name;
+  }
+
+  private function loadRemote() {
+    $image_url = $this->image_url;
+    $width = $this->width;
+    $height = $this->height;
 
     try {
       // start by getting the dimensions of the image
@@ -22,7 +67,6 @@ class Image {
     $source_width = $source_dimensions[0];
     $source_height = $source_dimensions[1];
 
-    $this->image_name = basename($image_url);
 
     // create image handles for the original, and the new one to be rendered
     $source_image = imagecreatefromjpeg($image_url);
@@ -36,24 +80,25 @@ class Image {
 
     // save the new image has the image handle
     $this->image_handle = $temp_image;
-    $this->valid = true;
   }
 
   public function isValid() {
-    return $this->valid;
+    return $this->image_handle != false;
   }
 
   public function addFilter($amount=180) {
-    if(!$this->valid)
+    if(!$this->isValid())
       return false;
 
     $handle = $this->image_handle;
     for($i = 0; $i < $amount; $i++)
       imagefilter($this->image_handle, IMG_FILTER_GAUSSIAN_BLUR);
+
+    return true;
   }
 
   public function getData() {
-    if(!$this->valid)
+    if(!$this->isValid())
       return false;
 
     $handle = $this->image_handle;
