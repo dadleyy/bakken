@@ -33,7 +33,7 @@ class App {
 
     $image_data = $image->getData();
 
-    $response->header('Content-Type', 'text/plain');
+    $response->header('Content-Type', 'image/jpgeg');
     $response->setContent($image_data);
 
     $image->destroy();
