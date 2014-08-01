@@ -20,14 +20,15 @@ bakken.directive 'rbPlaylist', [() ->
       order: '='
     link: ($scope, $element, $attrs) ->
       $scope.ready = false
-      d3el = d3.select $element[0]
 
       display = (val) ->
         () ->
-          titleArea().style({display: val})
+          console.log val
+          titleArea().css
+            display: val
 
       titleArea = () ->
-        d3el.selectAll('.title-area')
+        $element.find '.title-area'
 
       transition = (state) ->
         style = if state == 'off' then {opacity: 1} else {opacity: 0}
@@ -37,7 +38,7 @@ bakken.directive 'rbPlaylist', [() ->
           if state == 'off'
             display_fn()
 
-          titleArea().transition().duration(600).style(style).each "end", display_fn
+          titleArea().animate style, 600, display_fn
 
       $element.hover transition('on'), transition('off')
 

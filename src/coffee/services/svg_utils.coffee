@@ -6,7 +6,7 @@ bakken.service 'SvgUtils', [() ->
     document.createElementNS namespace, tag
 
   setAttrs = (attrs) ->
-    for name in attrs do this.setAttributeNS(null, name, attrs[name])
+    this.setAttributeNS null, attr, value for attr, value in attrs
 
   SvgUtils =
 
