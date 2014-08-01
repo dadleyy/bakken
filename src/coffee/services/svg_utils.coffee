@@ -5,15 +5,22 @@ bakken.service 'SvgUtils', [() ->
   createElement = (tag) ->
     document.createElementNS namespace, tag
 
-  setAttrs = (attrs) ->
-    this.setAttributeNS null, attr, value for attr, value in attrs
+  class SvgElement
+
+    constructor: (@tag) ->
+      @element = createElement @tag
+
+    append: (child) ->
+      @element.appendChild child
+
+
+    setAttrs: (attrs) ->
+      if angular.isObject
+        @element.setAttributeNS null, attr, val for attr, val of attrs
 
   SvgUtils =
 
     create: (tag) ->
-      createElement tag
-
-    attr: (element, attrs) ->
-      setAttrs.call element, attrs
+      new SvgElement tag
 
 ]

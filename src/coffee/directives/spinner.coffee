@@ -8,10 +8,10 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
       hidden: '='
     link: ($scope, $element, $attrs) ->
       svg = SvgUtils.create 'svg'
+      grp = SvgUtils.create 'g'
+      path = SvgUtils.create 'path'
       playing = false
       loop_id = null
-      grp = SvgUtils.create 'g'
-      path = SvgUtils.create 'p'
       vert_count = 5
       orb_height = if $attrs['height'] then parseFloat($attrs['height']) else 100
       orb_width = if $attrs['width'] then parseFloat($attrs['width']) else 100
@@ -81,8 +81,9 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
         p += "Z"
         rotation += rotation_velocity * (dt or 0.01)
         rotation = 0  if rotation > Math.PI * 2
-        SvgUtils.attr path, d: p
-        SvgUtils.attr path, fill: colorFlux(dt)
+        path.setAttrs
+          d: p
+          fill: colorFlux(dt)
 
       start = () ->
         if !playing
@@ -91,13 +92,12 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
 
       stop = () ->
         Loop.remove loop_id
-        console.log('wtf')
         $element.css
           display: "none"
 
-      grp.appendChild path
-      svg.appendChild grp
-      $element.append svg
+      grp.append path.element
+      svg.append grp.element
+      $element.append svg.element
 
       $scope.$watch 'hidden', toggle
       start()

@@ -23,7 +23,6 @@ bakken.directive 'rbPlaylist', [() ->
 
       display = (val) ->
         () ->
-          console.log val
           titleArea().css
             display: val
 
