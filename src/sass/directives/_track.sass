@@ -10,6 +10,26 @@
   overflow: hidden 
   border-bottom: 1px solid darken($track-background, 5)
 
+  button
+    +transition(top 400ms ease, left 400ms ease)
+    display: block
+    position: absolute
+    width: 20px
+    height: 20px
+    top: 5px
+    left: 5px
+    padding: 0px
+    background-position: center center
+    background-repeat: no-repeat
+    background-size: 15px 15px
+    &.twitter
+      background-image: url('/svg/twitter.svg')
+    &.soundcloud
+      background-image: url('/svg/soundcloud.svg')
+    &.play
+      background-position: 4px center
+      background-image: url('/svg/play.svg')
+
   .pre, .post
     position: absolute
     width: 100%
@@ -52,15 +72,15 @@
         background: #414141
         display: inline-block
         margin: 0 5px
+        position: relative
         &:nth-child(1)
           +transition(all 600ms ease)
         &:nth-child(2)
           +transition(all 500ms ease)
         &:hover
-          width: 40px
-          height: 40px
 
   &:hover
     .pre .actions .action
-      +transform(translateY(0px))
+      +transform(translateY(-10px))
       opacity: 1.0
+

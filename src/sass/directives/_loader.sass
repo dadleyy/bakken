@@ -1,0 +1,56 @@
+.loader
+  position: fixed
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 0%
+  z-index: 1000
+
+  .overlay
+    +transition(opacity 500ms ease)
+    position: absolute
+    top: 0px
+    left: 0px
+    background: rgba(255,255,255,0.75)
+    width: 100%
+    height: 100%
+    z-index: 2
+    opacity: 0.0
+    display: none
+
+  .content
+    +transition(top 300ms ease)
+    position: absolute
+    top: -100px
+    left: 0px
+    width: 100%
+    z-index: 3
+    background: white
+    box-shadow: 0px 1px 0px rgba(0,0,0,0.25)
+
+    > .inner
+      +outer-container
+      padding: 10px 0
+      .left
+        +span-columns(8)
+      .right
+        +span-columns(4)
+        +omega
+
+  h3.load-text
+    font-size: 28px
+    line-height: 60px
+
+  .spinner
+    +outer-container
+    svg
+      float: right
+
+  &.loading
+    height: 100%
+
+    .overlay
+      opacity: 1.0
+      display: block
+    .content
+      top: 0px

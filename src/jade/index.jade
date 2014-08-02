@@ -5,6 +5,7 @@ html(ng-app="bakken")
     link(rel='stylesheet', href='/fonts/include.css', type='text/css')
     link(rel='stylesheet', href='/css/app.css', type='text/css')
   body
+    .loader(rb-loader)
     header(rb-header)
     .page
       div(ng-view)

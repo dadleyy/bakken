@@ -15,12 +15,16 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
       vert_count = 5
       orb_height = if $attrs['height'] then parseFloat($attrs['height']) else 100
       orb_width = if $attrs['width'] then parseFloat($attrs['width']) else 100
-      o_radius = 60
-      inner_radius = 40
+      o_radius = orb_width - (orb_width * 0.55)
+      inner_radius = orb_width - (orb_width * 0.65)
       rotation = 0
       rotation_velocity = Math.PI / 5
       rad_indx = 0
       rad_velocity = rotation_velocity * 10
+
+      svg.setAttrs
+        width: orb_width
+        height: orb_height
 
       toggle = () ->
         if $scope.hidden

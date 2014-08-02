@@ -98,6 +98,12 @@ module.exports = function() {
     },
 
     copy: {
+      svg: {
+        expand: true,
+        cwd: 'src/svg',
+        src: '**/*.svg',
+        dest: 'public/svg'
+      },
       index: {
         files: [{
           expand: true,
@@ -109,6 +115,10 @@ module.exports = function() {
     },
 
     watch: {
+      svg: {
+        files: ['src/svg/*.svg'],
+        tasks: ['copy:svg']
+      },
       scripts: {
         files: ['src/coffee/**/*.coffee'],
         tasks: ['coffee', 'smash']

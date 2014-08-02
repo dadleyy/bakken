@@ -23,6 +23,17 @@ bakken.directive 'rbDiscography', [() ->
           top = (track_count * 80) + 30
           top: [top,'px'].join('')
 
+      getPlaylistHeight = (playlist) ->
+        track_count = playlist.tracks.length
+        (track_count * 80) + 30
+
+
+      $scope.getDiscographyHeight = () ->
+        heights = [0, 0]
+        heights[index % 2] += getPlaylistHeight playlist for playlist, index in $scope.playlists
+        max_height = Math.max.apply(null, heights)
+        height: [max_height, 'px'].join ''
+
       $scope.$on 'playlistOpened', togglePlaylists
 
 ]

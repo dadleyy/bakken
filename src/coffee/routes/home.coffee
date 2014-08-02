@@ -3,6 +3,7 @@ bakken.config ['$routeProvider', ($routeProvider) ->
   homeRoute =
     templateUrl: 'views.home'
     controller: 'HomeController'
+    loadingText: 'Getting playlist info from soundcloud...'
     resolve:
       User: ['SoundcloudAPI', 'USER_ID', (SoundcloudAPI, USER_ID) ->
         user_params =
