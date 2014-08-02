@@ -11,13 +11,13 @@ bakken.directive 'rbLoader', ['$rootScope', '$timeout', ($rootScope, $timeout) -
 
       finish = () ->
         $scope.loading = false
+        $scope.$broadcast 'spinnerStop'
 
       routeFinish = () ->
         $timeout finish, 1000
 
       routeError = () ->
         $scope.loading = false
-        console.log 'whoa'
 
       $rootScope.$on '$routeChangeStart', routeStart
       $rootScope.$on '$routeChangeSuccess', routeFinish

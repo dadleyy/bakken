@@ -104,5 +104,6 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
       $element.append svg.element
 
       $scope.$watch 'hidden', toggle
+      $scope.$on 'spinnerStop', stop
       start()
 ]
