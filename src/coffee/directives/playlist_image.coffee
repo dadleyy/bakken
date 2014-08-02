@@ -1,7 +1,6 @@
 bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q, Viewport) ->
 
   image_cache = {}
-  blur_filter = new createjs.BlurFilter 25, 25, 2
   color_filter = new createjs.ColorMatrixFilter [
     0.23,0.23,0.23,0,0,
     0.23,0.23,0.23,0,0,

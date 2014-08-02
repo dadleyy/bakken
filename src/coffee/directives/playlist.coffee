@@ -1,11 +1,44 @@
 bakken.directive 'rbPlaylist', [() ->
 
+
   class PlaylistController
 
     constructor: (@scope) ->
 
     initialize: () ->
       @scope.ready = true
+
+
+    setElement: (element) ->
+      @element = element
+
+    open: () ->
+      $element = @element
+      @scope.active = true
+      display = "none"
+      style =
+        opacity: 0.0
+      self = @
+
+      finish = () ->
+        $element.find('.title-area').css {display: display}
+        self.scope.$emit 'playlistOpened', self
+
+      $element.find('.title-area').stop().animate style, 300, finish
+
+
+    close: () ->
+      $element = @element
+      @scope.active = false
+      display = "block"
+      style =
+        opacity: 1.0
+
+      emit = @scope.$emit
+
+
+      $element.find('.title-area').css({display: display}).stop().animate style, 300
+
 
 
   PlaylistController.$inject = ['$scope']
@@ -18,27 +51,18 @@ bakken.directive 'rbPlaylist', [() ->
     scope:
       playlist: '='
       order: '='
-    link: ($scope, $element, $attrs) ->
+    link: ($scope, $element, $attrs, playlist) ->
       $scope.ready = false
+      $scope.active = false
 
-      display = (val) ->
-        () ->
-          titleArea().css
-            display: val
+      $scope.reveal = () ->
+        playlist.setElement $element
 
-      titleArea = () ->
-        $element.find '.title-area'
+        if !$scope.active
+          playlist.open($element)
+        else
+          playlist.close($element)
 
-      transition = (state) ->
-        style = if state == 'off' then {opacity: 1} else {opacity: 0}
-        display_fn = if state == 'off' then display('block') else display('none')
-
-        () ->
-          if state == 'off'
-            display_fn()
-
-          titleArea().animate style, 600, display_fn
-
-      $element.hover transition('on'), transition('off')
+        $scope.active
 
 ]

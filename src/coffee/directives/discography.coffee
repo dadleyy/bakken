@@ -7,6 +7,12 @@ bakken.directive 'rbDiscography', [() ->
       playlists: '='
     templateUrl: 'directives.discography'
     link: ($scope, $element, $attrs) ->
+      active_playlist = null
+
+      togglePlaylists = (evt, playlist) ->
+        if active_playlist
+          active_playlist.close()
+        active_playlist = playlist
 
       $scope.getPlaylistPosition = (playlist, index) ->
         if index - 2 < 0
@@ -16,5 +22,7 @@ bakken.directive 'rbDiscography', [() ->
           track_count = pl_above.tracks.length
           top = (track_count * 80) + 30
           top: [top,'px'].join('')
+
+      $scope.$on 'playlistOpened', togglePlaylists
 
 ]

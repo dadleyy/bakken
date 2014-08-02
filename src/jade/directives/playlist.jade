@@ -1,10 +1,15 @@
-.playlist(ng-class="{viewable: ready}")
+.playlist(ng-class="{viewable: ready, active: active}")
   .spinner(rb-spinner, hidden="ready", width="200", height="200")
   .inner
     .title-area
       .playlist-image(rb-playlist-image, playlist="playlist", order="order")
       .playlist-title-container
-        h1.title {{ playlist.title }}
+        .title
+          .span.border.sides
+          .span.border.top
+          .inner
+            h1 {{ playlist.title }}
+            button.reveal(ng-click="reveal()") tracks
     .track-area
       .track-container(ng-repeat="track in playlist.tracks")
         .track(rb-track track="track")
