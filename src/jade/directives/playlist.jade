@@ -8,7 +8,7 @@
           .span.border.sides
           .span.border.top
           .inner
-            h1 {{ playlist.title }}
+            h1.playlist-title {{ playlist.title }}
             button.reveal(ng-click="reveal()") tracks
     .track-area
       .track-container(ng-repeat="track in playlist.tracks")

@@ -66,9 +66,13 @@
       padding: 40px
       .title
         position: relative
+
+        h1.playlist-title
+          +transition(color 500ms ease)
+
         .span.border
           &:after, &:before
-            +transition(opacity 500ms ease, width 500ms ease, height 500ms ease, left 500ms ease, top 500ms ease)
+            +transition(opacity 500ms ease, width 500ms ease, height 500ms ease, left 500ms ease, top 500ms ease, color 500ms ease 1000ms)
             display: block
             position: absolute
             content: ''
@@ -150,6 +154,9 @@
 
   &:hover
     .title-area
+      .playlist-title
+        color: $color-playlist-title-hover
+
       button.reveal
         +transform(translateY(0px))
         opacity: 1.0
@@ -159,6 +166,7 @@
           .span.border
             &:after, &:before
               opacity: 1.0
+              background: $color-playlist-title-hover
             &.top
               &:after, &:before
                 width: 100%
