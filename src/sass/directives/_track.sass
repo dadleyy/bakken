@@ -10,7 +10,7 @@
   overflow: hidden 
   border-bottom: 1px solid darken($track-background, 5)
 
-  button
+  button.action
     +transition(top 400ms ease, left 400ms ease)
     display: block
     position: absolute
@@ -26,7 +26,7 @@
       background-image: url('/svg/twitter.svg')
     &.soundcloud
       background-image: url('/svg/soundcloud.svg')
-    &.play
+    &.state
       background-position: 4px center
       background-image: url('/svg/play.svg')
 
@@ -61,7 +61,7 @@
       padding: 20px 0 0 0
       left: 0px
       text-align: center
-      .action
+      div.action-container
         box-shadow: inset 0px 0px 1px rgba(0,0,0,0.25), 0px 0px 1px 0px white
         +transition(all 400ms ease)
         +transform(translateY(20px))
@@ -79,12 +79,17 @@
           +transition(all 500ms ease)
         &:hover
 
-  &:hover
+  &:hover, &.playing
     .pre 
       .title
         h2.track-title
           +transform(translateY(-5px))
-      .actions .action
+      .actions .action-container
         +transform(translateY(-15px))
         opacity: 1.0
 
+  &.playing
+    button.action
+      &.state
+        background-position: center center
+        background-image: url('/svg/pause.svg')

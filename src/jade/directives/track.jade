@@ -1,13 +1,13 @@
-.track(ng-class="{reveal: revealed}")
+.track(ng-class="{reveal: revealed, playing: playing}")
   .pre
     .title-container
       .title
         h2.track-title {{ track.title }}
     .actions
-      .action
-        button.twitter(ng-click="goTo('twitter')")
-      .action
-        button.play(ng-click="play()")
-      .action
-        button.soundcloud(ng-click="goTo('soundcloud')")
+      .action-container
+        button.action.twitter(ng-click="goTo('twitter')")
+      .action-container
+        button.action.state(ng-click="toggle()")
+      .action-container
+        button.action.soundcloud(ng-click="goTo('soundcloud')")
   .post
