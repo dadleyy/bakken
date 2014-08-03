@@ -32,6 +32,7 @@ deploy:
   api_key:
     secure: JKpYkCpqXCjBX4BXPAV9LltRlGmngUu2XJCpy8xLzQOF0L9/PXLvOH+bm0br9b6J12InAEgBOoHqfaB10YpXLFhPIqPonNhq4NFp3UxnwnDSlAilEcL0VWKmAzD6GgILgQeoBsob3/WR2ai9by15BNcNL3J0InacK3Wj+WTKtnk=
   file: bakken-$TRAVIS_COMMIT.tar.gz
+  skip_cleanup: true
   release-number: 0.0.${TRAVIS_BUILD_NUMBER}
   on:
     repo: dadleyy/bakken
