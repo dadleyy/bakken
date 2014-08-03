@@ -6,6 +6,7 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
     templateUrl: 'directives.spinner'
     scope:
       hidden: '='
+      listenTo: '='
     link: ($scope, $element, $attrs) ->
       svg = SvgUtils.create 'svg'
       grp = SvgUtils.create 'g'
@@ -104,6 +105,9 @@ bakken.directive 'rbSpinner', ['Loop', 'SvgUtils', (Loop, SvgUtils) ->
       $element.append svg.element
 
       $scope.$watch 'hidden', toggle
-      $scope.$on 'spinnerStop', stop
+
+      if $attrs['stopOn']
+        $scope.$on $attrs['stopOn'], stop
+
       start()
 ]

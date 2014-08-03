@@ -4,6 +4,7 @@ bakken.directive 'rbLoader', ['$rootScope', '$timeout', ($rootScope, $timeout) -
     templateUrl: 'directives.loader'
     link: ($scope, $element, $attrs) ->
       $scope.loading = false
+      spinner_stop_on = 'loaderFinished'
 
       routeStart = (evt, routing) ->
         $scope.loading = true
@@ -11,7 +12,7 @@ bakken.directive 'rbLoader', ['$rootScope', '$timeout', ($rootScope, $timeout) -
 
       finish = () ->
         $scope.loading = false
-        $scope.$broadcast 'spinnerStop'
+        $scope.$broadcast spinner_stop_on
 
       routeFinish = () ->
         $timeout finish, 1000
