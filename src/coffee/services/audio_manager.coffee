@@ -5,7 +5,6 @@ bakken.service 'Audio', ['SAK', (SAK) ->
     constructor: () ->
       @active_track = null
       @active_sound = null
-      console.log 'new audio class'
 
     open: (track) ->
       if @active_track != null
@@ -31,8 +30,6 @@ bakken.service 'Audio', ['SAK', (SAK) ->
       if @active_sound != null
         @active_sound.stop()
         @active_sound = null
-
-    close: () ->
 
   new Audio
 
