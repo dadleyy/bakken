@@ -19,6 +19,8 @@ after_success:
   "ftp://ftp.sizethreestudios.com/bakken-$TRAVIS_COMMIT.tar.gz"
 - curl --ftp-create-dirs -T "bakken-$TRAVIS_COMMIT.tar.gz" -u $FTP_USER:$FTP_PASS
   "ftp://ftp.sizethreestudios.com/bakken-latest.tar.gz"
+- git tag 0.0.${TRAVIS_BUILD_NUMBER}
+- git push --tags
 env:
   global:
   - secure: BwWon+qxmuP9gY0e/ypd7i5cYbSO3xOXZrIek1Wx9hcLz3U56/rmubhZA0DmuGOgncAkkGOSCIni57XPHhrHMfwJh1k33wQUBav24kTMlFscKBKMndgjIQSNtgYBMwelcr+qJ+pjZymXaDspBVd2yoZDGdoQiPtXvW5mBIp5XjY=
