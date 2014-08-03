@@ -24,3 +24,10 @@ env:
   - secure: BwWon+qxmuP9gY0e/ypd7i5cYbSO3xOXZrIek1Wx9hcLz3U56/rmubhZA0DmuGOgncAkkGOSCIni57XPHhrHMfwJh1k33wQUBav24kTMlFscKBKMndgjIQSNtgYBMwelcr+qJ+pjZymXaDspBVd2yoZDGdoQiPtXvW5mBIp5XjY=
   - secure: NVSWygYPyezQAZNx2BBOePWZrWvi0rXvdmJl7dgtvgqCI2AMgMhxsUjBnjNm7Gi94802sC5pRwkvgXd5lBVklwy4k/FJQgQLgBvB3R8bJwZ77w2dXxJrZrjj/37DYAeUlenV+ilg/o3bAf0GxzXDRvf1wWX2BtWMYQDVpoS94xs=
   - secure: Zd2a6TSbLxnt0mkJwxV7bRn6kc3UD4ybWLchRAxeoo4hSDpVG5PL05oN34FBb4ugwxcdqb2TmU9EhlDZz1A3nVQialmGLAksYCcDrs3900RE0ysDwspT3tBXzLTyb9MTlzGyMs7Aud7RtytzGQ3OwwTvgtreJ6oMM9qWgnLgTMI=
+deploy:
+  provider: releases
+  api_key:
+    secure: JKpYkCpqXCjBX4BXPAV9LltRlGmngUu2XJCpy8xLzQOF0L9/PXLvOH+bm0br9b6J12InAEgBOoHqfaB10YpXLFhPIqPonNhq4NFp3UxnwnDSlAilEcL0VWKmAzD6GgILgQeoBsob3/WR2ai9by15BNcNL3J0InacK3Wj+WTKtnk=
+  file: bakken-$TRAVIS_COMMIT.tar.gz
+  on:
+    repo: dadleyy/bakken
