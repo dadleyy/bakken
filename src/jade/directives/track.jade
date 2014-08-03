@@ -2,12 +2,12 @@
   .pre
     .title-container
       .title
-        h2 {{ track.title }}
+        h2.track-title {{ track.title }}
     .actions
       .action
-        button.twitter
+        button.twitter(ng-click="goTo('twitter')")
       .action
         button.play(ng-click="play()")
       .action
-        button.soundcloud
+        button.soundcloud(ng-click="goTo('soundcloud')")
   .post

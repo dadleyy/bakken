@@ -45,13 +45,13 @@
       display: table
       height: 80px 
       width: 100%
-
       .title
         display: table-cell
         text-align: center
         vertical-align: middle
-
-      h2
+      h2.track-title
+        +transition(transform 500ms ease)
+        +transform(translateY(0px))
         font-size: 20px
 
     .actions
@@ -80,7 +80,11 @@
         &:hover
 
   &:hover
-    .pre .actions .action
-      +transform(translateY(-10px))
-      opacity: 1.0
+    .pre 
+      .title
+        h2.track-title
+          +transform(translateY(-5px))
+      .actions .action
+        +transform(translateY(-15px))
+        opacity: 1.0
 
