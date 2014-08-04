@@ -1,12 +1,9 @@
 bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q, Viewport) ->
 
   image_cache = {}
-  color_filter = new createjs.ColorMatrixFilter [
-    0.25, 0.20, 0.25, 0, 0,
-    0.25, 0.20, 0.25, 0, 0,
-    0.25, 0.20, 0.25, 0, 0,
-    0.00, 0.00, 0.00, 1, 0
-  ]
+
+  matrix = new createjs.ColorMatrix -35, 0, -100, 0
+  color_filter = new createjs.ColorMatrixFilter matrix
 
   cleanImageUrl = (url) ->
     original = url.replace /large/gi, 'original'
