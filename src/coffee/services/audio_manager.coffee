@@ -10,7 +10,7 @@ bakken.service 'Audio', ['SAK', (SAK) ->
       @playing = false
 
       @sm_sound = soundManager.createSound
-        url: @track.stream_url
+        url: [@track.stream_url, ['client_id', SAK].join('=')].join('?')
 
       @events =
         finish: []
