@@ -2,10 +2,10 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
   image_cache = {}
   color_filter = new createjs.ColorMatrixFilter [
-    0.23,0.23,0.23,0,0,
-    0.23,0.23,0.23,0,0,
-    0.23,0.23,0.23,0,0,
-    0,0,0,1,0
+    0.25, 0.20, 0.25, 0, 0,
+    0.25, 0.20, 0.25, 0, 0,
+    0.25, 0.20, 0.25, 0, 0,
+    0.00, 0.00, 0.00, 1, 0
   ]
 
   cleanImageUrl = (url) ->
@@ -44,7 +44,6 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     else
       render image_cache[active_image]
       deffered.resolve()
-      
     
     deffered.promise
 
@@ -56,17 +55,18 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     scope:
       playlist: '='
       order: '='
-    link: ($scope, $element, $attrs, trackController) ->
+    link: ($scope, $element, $attrs, playlistController) ->
       canvas = document.createElement 'canvas'
       active_image = 0
       resize_timeout = null
 
       $element.append canvas
-
+      
+      # playlists are only viewable after their images
+      # are done being rendered into the canvas
       makeViewable = () ->
         cb = () ->
-          trackController.initialize()
-
+          playlistController.viewable(true)
         $timeout cb, (200 * $scope.order) + 400
 
       draw = () ->
@@ -81,11 +81,9 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
         promise = drawImage canvas, image_urls[active_image]
         promise.then makeViewable
 
-
       resize = () ->
         if resize_timeout != null
           $timeout.cancel resize_timeout
-
         resize_timeout = $timeout draw, 100
 
       timeout_id = $timeout draw
