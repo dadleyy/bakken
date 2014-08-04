@@ -5,12 +5,27 @@ bakken.directive 'rbPlaylist', [() ->
 
     constructor: (@scope) ->
       @track_controllers = []
+      @active_index = null
 
     viewable: (state) ->
       @scope.ready = state
 
     registerTrack: (track_controller) ->
+      indx = @track_controllers.length
+
+      on_finish = () =>
+        @playNext()
+
+      set_active = () =>
+        @active_index = indx
+
+      track_controller.sound.on 'play', set_active
+      track_controller.sound.on 'finish', on_finish
+
       @track_controllers.push track_controller
+
+    playNext: () ->
+      console.log 'playing next, which is: ' + (@active_index + 1)
 
   PlaylistController.$inject = ['$scope']
 

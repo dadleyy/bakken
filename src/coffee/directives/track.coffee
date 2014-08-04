@@ -4,13 +4,23 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
 
     constructor: (@scope) ->
       @playback_url = @scope.track.stream_url
-      @sound = null
+      @sound = new Audio.Sound @scope.track
+
+      onstop = (evt) =>
+        @scope.playing = false
+
+      onstart = (evt) =>
+        @scope.playing = true
+
+      @sound.on
+        stop: onstop
+        play: onstart
 
     stop: () ->
-      @scope.playing = false
+      @sound.stop()
 
     start: () ->
-      @scope.playing = true
+      @sound.play()
 
   Track.$inject = ['$scope']
 
@@ -19,7 +29,6 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
     scope:
       track: '='
       index: '='
-      onPlay: '&'
     replace: true
     controller: Track
     require: ['rbTrack', '^rbPlaylist']
@@ -57,7 +66,9 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
 
       $scope.toggle = () ->
         if $scope.playing
+          track_controller.stop()
         else
+          track_controller.start()
 
       $timeout reveal, 100 * $scope.index
       playlist_controller.registerTrack track_controller
