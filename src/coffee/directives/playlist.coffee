@@ -4,42 +4,13 @@ bakken.directive 'rbPlaylist', [() ->
   class PlaylistController
 
     constructor: (@scope) ->
+      @track_controllers = []
 
-    initialize: () ->
-      @scope.ready = true
+    viewable: (state) ->
+      @scope.ready = state
 
-
-    setElement: (element) ->
-      @element = element
-
-    open: () ->
-      $element = @element
-      @scope.active = true
-      display = "none"
-      style =
-        opacity: 0.0
-      self = @
-
-      finish = () ->
-        $element.find('.title-area').css {display: display}
-        self.scope.$emit 'playlistOpened', self
-
-      $element.find('.title-area').stop().animate style, 300, finish
-
-
-    close: () ->
-      $element = @element
-      @scope.active = false
-      display = "block"
-      style =
-        opacity: 1.0
-
-      emit = @scope.$emit
-
-
-      $element.find('.title-area').css({display: display}).stop().animate style, 300
-
-
+    registerTrack: (track_controller) ->
+      @track_controllers.push track_controller
 
   PlaylistController.$inject = ['$scope']
 
@@ -55,14 +26,26 @@ bakken.directive 'rbPlaylist', [() ->
       $scope.ready = false
       $scope.active = false
 
+      $scope.open = () ->
+        $scope.active = true
+
+        finish = () ->
+          $element.find('.title-area').css {display: "none"}
+          $scope.$emit 'playlistOpened', $scope
+          
+        style = {opacity: 0.0}
+        $element.find('.title-area').stop().animate style, 300, finish
+
+      $scope.close = () ->
+        $scope.active = false
+        style = {opacity: 1.0}
+        $element.find('.title-area').css({display: 'block'}).stop().animate style, 300
+
       $scope.reveal = () ->
-        playlist.setElement $element
-
         if !$scope.active
-          playlist.open($element)
+          $scope.open()
         else
-          playlist.close($element)
-
+          $scope.close()
         $scope.active
 
 ]

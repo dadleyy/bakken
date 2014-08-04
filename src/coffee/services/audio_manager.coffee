@@ -18,6 +18,8 @@ bakken.service 'Audio', ['SAK', (SAK) ->
 
       @active_sound = soundManager.createSound
         url: [@active_track.playback_url, SAK].join '?client_id='
+        onfinish: () ->
+          console.log 'whoa'
 
       @active_sound.play()
       @active_sound

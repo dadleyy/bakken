@@ -12,4 +12,4 @@
             button.reveal(ng-click="reveal()") tracks
     .track-area
       .track-container(ng-repeat="track in playlist.tracks")
-        .track(rb-track track="track")
+        .track(rb-track track="track" index="$index")

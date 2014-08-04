@@ -27,7 +27,6 @@ bakken.directive 'rbDiscography', [() ->
         track_count = playlist.tracks.length
         (track_count * 80) + 30
 
-
       $scope.getDiscographyHeight = () ->
         heights = [0, 0]
         heights[index % 2] += getPlaylistHeight playlist for playlist, index in $scope.playlists
