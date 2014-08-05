@@ -14,12 +14,19 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       images.push(cleanImageUrl(track.artwork_url)) for track in playlist.tracks
       images
 
-  drawImage = (active_image) ->
+  drawImage = (active_image, width, height) ->
     deffered = $q.defer()
     render = (image_ele) ->
-      $(image_ele).pixastic("blurfast", {amount: 3.0}).pixastic("hsl", {hue: 0, saturation: -90, lightness: -50})
+      $(image_ele).pixastic("blurfast", {
+        amount: 3.0,
+      }).pixastic "hsl",
+        hue: 0
+        saturation: -90
+        lightness: -40
 
     image_ele = new Image()
+    image_ele.width = width
+    image_ele.height = height
     image_ele.src = active_image
     image_ele.onload = () ->
       render(image_ele)
@@ -49,7 +56,9 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       draw = () ->
         playlist = $scope.playlist
         image_urls = getPlaylistImageList playlist
-        data = drawImage image_urls[active_image]
+        width = $element.outerWidth()
+        height = $element.outerHeight()
+        data = drawImage image_urls[active_image], width, height
         data.promise.then makeViewable
         $element.append data.image
 
