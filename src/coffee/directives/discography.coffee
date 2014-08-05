@@ -1,10 +1,35 @@
 bakken.directive 'rbDiscography', [() ->
 
+  class Discography
+
+    constructor: (@scope) ->
+      @playlist_controllers = []
+      @active_playlist = null
+
+      update = (evt, active_index) =>
+        if @active_playlist != null
+          if active_index != @active_playlist
+            active_playlist = @playlist_controllers[@active_playlist]
+            active_playlist.killAll()
+            active_playlist.scope.close()
+
+        @active_playlist = active_index
+
+      @scope.$on 'playlistStart', update
+
+    registerPlaylist: (playlist) ->
+      index = @playlist_controllers.length
+      @playlist_controllers.push playlist
+      index
+
+  Discography.$inject = ['$scope']
+
   rbDiscography =
     restrict: 'EA'
     replace: true
     scope:
       playlists: '='
+    controller: Discography
     templateUrl: 'directives.discography'
     link: ($scope, $element, $attrs) ->
       active_playlist = null

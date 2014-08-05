@@ -17,9 +17,11 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
         play: onstart
 
     stop: () ->
+      @scope.playing = false
       @sound.stop()
 
     start: () ->
+      @scope.playing = true
       @sound.play()
 
   Track.$inject = ['$scope']
@@ -66,7 +68,7 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
 
       $scope.toggle = () ->
         if $scope.playing
-          track_controller.stop()
+          playlist_controller.killAll()
         else
           track_controller.start()
 

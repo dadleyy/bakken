@@ -1,6 +1,5 @@
 bakken.directive 'rbPlaylist', [() ->
 
-
   class PlaylistController
 
     constructor: (@scope) ->
@@ -10,6 +9,13 @@ bakken.directive 'rbPlaylist', [() ->
     viewable: (state) ->
       @scope.ready = state
 
+    killAll: () ->
+      track.stop() for track in @track_controllers
+      @active_index = null
+
+    isPlaying: () ->
+      @active_index != null
+
     registerTrack: (track_controller) ->
       indx = @track_controllers.length
 
@@ -17,6 +23,11 @@ bakken.directive 'rbPlaylist', [() ->
         @playNext()
 
       set_active = () =>
+        @scope.$emit 'playlistStart', @scope.index
+
+        if @active_index != null
+          @track_controllers[@active_index].sound.stop()
+
         @active_index = indx
 
       track_controller.sound.on 'play', set_active
@@ -34,12 +45,15 @@ bakken.directive 'rbPlaylist', [() ->
     replace: true
     templateUrl: 'directives.playlist'
     controller: PlaylistController
+    require: ['^rbDiscography', 'rbPlaylist']
     scope:
       playlist: '='
       order: '='
-    link: ($scope, $element, $attrs, playlist) ->
+    link: ($scope, $element, $attrs, controllers) ->
       $scope.ready = false
       $scope.active = false
+      discography_controller = controllers[0]
+      playlist_controller = controllers[1]
 
       $scope.open = () ->
         $scope.active = true
@@ -52,6 +66,9 @@ bakken.directive 'rbPlaylist', [() ->
         $element.find('.title-area').stop().animate style, 300, finish
 
       $scope.close = () ->
+        if playlist_controller.isPlaying()
+          return
+
         $scope.active = false
         style = {opacity: 1.0}
         $element.find('.title-area').css({display: 'block'}).stop().animate style, 300
@@ -62,5 +79,7 @@ bakken.directive 'rbPlaylist', [() ->
         else
           $scope.close()
         $scope.active
+
+      $scope.index = discography_controller.registerPlaylist playlist_controller
 
 ]

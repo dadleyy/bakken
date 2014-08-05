@@ -1,0 +1,2 @@
+soundManager.setup
+  debugMode: false
