@@ -4,7 +4,8 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
   cleanImageUrl = (url) ->
     original = url.replace /large/gi, 'original'
-    final = ['/api/images', original.replace(/http:\/\//, '')].join '/'
+    no_proto = original.replace /https?:\/\//, ''
+    final = ['/api/images', no_proto].join '/'
 
   getPlaylistImageList = (playlist) ->
     if playlist.artwork_url
