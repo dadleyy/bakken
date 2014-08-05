@@ -36,7 +36,11 @@ bakken.directive 'rbPlaylist', [() ->
       @track_controllers.push track_controller
 
     playNext: () ->
-      console.log 'playing next, which is: ' + (@active_index + 1)
+      @track_controllers[@active_index].sound.stop()
+      add_indx = @active_index + 1
+      length = @track_controllers.length
+      next = if add_indx > length - 1 then 0 else add_indx
+      @track_controllers[next].start()
 
   PlaylistController.$inject = ['$scope']
 

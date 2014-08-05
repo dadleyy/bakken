@@ -1,4 +1,4 @@
-bakken.service 'Audio', ['SAK', (SAK) ->
+bakken.service 'Audio', ['$q', 'SAK', ($q, SAK) ->
 
   isStr = angular.isString
   isFn = angular.isFunction
@@ -8,16 +8,26 @@ bakken.service 'Audio', ['SAK', (SAK) ->
 
     constructor: (@track) ->
       @playing = false
+      @load_promise = $q.defer()
 
       @sm_sound = soundManager.createSound
         url: [@track.stream_url, ['client_id', SAK].join('=')].join('?')
         onfinish: () =>
           @fire 'finish'
+        onload: () =>
+          @load_promise.resolve @sm_sound.duration
+          @duration = @sm_sound.duration
 
       @events =
         finish: []
         stop: []
         play: []
+
+    load: () ->
+      @load_promise.promise
+
+    goTo: (time) ->
+      @sm_sound.setPosition time
 
     on: (evt, fn) ->
 
