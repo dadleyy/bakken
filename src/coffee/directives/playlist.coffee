@@ -1,4 +1,4 @@
-bakken.directive 'rbPlaylist', [() ->
+bakken.directive 'rbPlaylist', ['Analytics', (Analytics) ->
 
   class PlaylistController
 
@@ -41,6 +41,8 @@ bakken.directive 'rbPlaylist', [() ->
       length = @track_controllers.length
       next = if add_indx > length - 1 then 0 else add_indx
       @track_controllers[next].start()
+      @track_controllers[next].pushAnalytics 'cycle'
+
 
   PlaylistController.$inject = ['$scope']
 

@@ -24,6 +24,9 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', 'Analytics', ($time
       @scope.playing = true
       @sound.play()
 
+    pushAnalytics: (evt_type) ->
+      Analytics.trackEvent 'audio', evt_type, @scope.track.permalink
+
   Track.$inject = ['$scope']
 
   rbTrack =
@@ -71,7 +74,7 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', 'Analytics', ($time
           playlist_controller.killAll()
         else
           track_controller.start()
-          Analytics.trackEvent 'audio', 'play', $scope.track.permalink
+          track_controller.pushAnalytics 'play'
 
       $timeout reveal, 100 * $scope.index
       playlist_controller.registerTrack track_controller
