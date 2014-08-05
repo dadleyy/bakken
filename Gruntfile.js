@@ -150,6 +150,12 @@ module.exports = function() {
         module: "bakken",
         name: "SAK",
         key: btoa(process.env['SOUNDCLOUD_KEY'])
+      },
+      google: {
+        dest: 'obj/js/google.js',
+        module: false,
+        name: 'GOOGLE_ANALYTICS',
+        key: btoa(process.env['GOOGLE_ANALYTICS'])
       }
     },
 

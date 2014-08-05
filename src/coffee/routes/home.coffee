@@ -19,6 +19,9 @@ bakken.config ['$routeProvider', ($routeProvider) ->
         playlists = SoundcloudAPI.User.playlists user_params
         playlists.$promise
       ]
+      analytics: ['Analytics', (Analytics) ->
+        Analytics.trackPage '/'
+      ]
 
   $routeProvider.when '/', homeRoute
 

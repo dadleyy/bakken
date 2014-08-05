@@ -1,1 +1,1 @@
-bakken = angular.module "bakken", ['ngRoute', 'ngResource']
+bakken = angular.module "bakken", ['ngRoute', 'ngResource', 'angular-google-analytics']

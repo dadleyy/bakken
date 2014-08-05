@@ -1,4 +1,4 @@
-bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window, Audio) ->
+bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', 'Analytics', ($timeout, $window, Audio, Analytics) ->
 
   class Track
 
@@ -71,6 +71,7 @@ bakken.directive 'rbTrack', ['$timeout', '$window', 'Audio', ($timeout, $window,
           playlist_controller.killAll()
         else
           track_controller.start()
+          Analytics.trackEvent 'audio', 'play', $scope.track.permalink
 
       $timeout reveal, 100 * $scope.index
       playlist_controller.registerTrack track_controller
