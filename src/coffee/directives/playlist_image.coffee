@@ -2,12 +2,9 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
 
   image_cache = {}
 
-  matrix = new createjs.ColorMatrix -35, 0, -100, 0
-  color_filter = new createjs.ColorMatrixFilter matrix
-
   cleanImageUrl = (url) ->
     original = url.replace /large/gi, 'original'
-    ['/api/images', original].join '?url='
+    final = ['/api/images', original.replace(/http:\/\//, '')].join '/'
 
   getPlaylistImageList = (playlist) ->
     if playlist.artwork_url
@@ -17,32 +14,18 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       images.push(cleanImageUrl(track.artwork_url)) for track in playlist.tracks
       images
 
-  drawImage = (canvas, active_image) ->
+  drawImage = (active_image) ->
     deffered = $q.defer()
-
-    context = canvas.getContext '2d'
-    width = canvas.width
-    height = canvas.height
-    x = 0
-    y = 0
-
     render = (image_ele) ->
-      context.drawImage image_ele, x, y, width, height
-      #blur_filter.applyFilter context, x, y, width, height
-      color_filter.applyFilter context, x, y, width, height
+      $(image_ele).pixastic("blurfast", {amount: 3.0}).pixastic("hsl", {hue: 0, saturation: -90, lightness: -50})
 
-    if !image_cache[active_image]
-      image_ele = new Image()
-      image_ele.src = active_image
-      image_cache[active_image] = image_ele
-      image_ele.onload = () ->
-        render(image_ele)
-        deffered.resolve()
-    else
-      render image_cache[active_image]
-      deffered.resolve()
-    
-    deffered.promise
+    image_ele = new Image()
+    image_ele.src = active_image
+    image_ele.onload = () ->
+      render(image_ele)
+      deffered.resolve(image_ele)
+  
+    {promise: deffered.promise, image: image_ele}
 
   rbPlaylistImage =
     restrict: 'AE'
@@ -53,30 +36,22 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       playlist: '='
       order: '='
     link: ($scope, $element, $attrs, playlistController) ->
-      canvas = document.createElement 'canvas'
       active_image = 0
       resize_timeout = null
-
-      $element.append canvas
       
       # playlists are only viewable after their images
       # are done being rendered into the canvas
-      makeViewable = () ->
+      makeViewable = (element) ->
         cb = () ->
           playlistController.viewable(true)
         $timeout cb, (200 * $scope.order) + 400
 
       draw = () ->
-        element = $element[0].parentNode
-        width = element.offsetWidth
-        height = element.offsetHeight
-        canvas.setAttribute 'width', width
-        canvas.setAttribute 'height', height
         playlist = $scope.playlist
-
         image_urls = getPlaylistImageList playlist
-        promise = drawImage canvas, image_urls[active_image]
-        promise.then makeViewable
+        data = drawImage image_urls[active_image]
+        data.promise.then makeViewable
+        $element.append data.image
 
       resize = () ->
         if resize_timeout != null
@@ -84,6 +59,6 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
         resize_timeout = $timeout draw, 100
 
       timeout_id = $timeout draw
-      Viewport.addListener resize
+      #Viewport.addListener resize
 
 ]
