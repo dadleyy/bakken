@@ -4,7 +4,7 @@ The personal website for a talented bassist.
 
 ## Releases
 
-For a list of compiled releases, visit the [ftp server](http://ftp.sizethreestudios.com/artifacts/).
+For a list of compiled releases, visit the [ftp server](http://ftp.sizethreestudios.com/artifacts/bakken/).
 
 ## Building
 
