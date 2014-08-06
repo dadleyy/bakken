@@ -155,7 +155,7 @@ module.exports = function() {
         dest: 'obj/js/google.js',
         module: false,
         name: 'GOOGLE_ANALYTICS',
-        key: btoa(process.env['GOOGLE_ANALYTICS'])
+        key: btoa(process.env['GOOGLE_ANALYTICS_ID'])
       }
     },
 
