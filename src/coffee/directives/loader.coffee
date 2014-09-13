@@ -7,8 +7,9 @@ bakken.directive 'rbLoader', ['$rootScope', '$timeout', ($rootScope, $timeout) -
       spinner_stop_on = 'loaderFinished'
 
       routeStart = (evt, routing) ->
-        $scope.loading = true
-        $scope.text = routing.$$route.loadingText || 'Loading...'
+        if routing.$$route
+          $scope.loading = true
+          $scope.text = routing.$$route.loadingText || 'Loading...'
 
       finish = () ->
         $scope.loading = false

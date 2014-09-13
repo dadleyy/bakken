@@ -41,11 +41,13 @@ bakken.directive 'rbDiscography', [() ->
 
       $scope.getPlaylistPosition = (playlist, index) ->
         if index - 2 < 0
+          playlist.top = 0
           top: '0px'
         else
           pl_above = $scope.playlists[index-2]
           track_count = pl_above.tracks.length
-          top = (track_count * 80) + 30
+          top = pl_above.top + (track_count * 80) + 30
+          playlist.top = top
           top: [top,'px'].join('')
 
       getPlaylistHeight = (playlist) ->
