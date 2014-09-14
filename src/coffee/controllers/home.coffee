@@ -1,5 +1,13 @@
 bakken.controller 'HomeController', ['$scope', 'Playlists', ($scope, Playlists) ->
 
-  $scope.playlists = Playlists 
+  trackCount = (a, b) ->
+    ret = 0
+    if a.tracks.length < b.tracks.length
+      ret = 1
+    else
+      ret = -1
+    ret
+
+  $scope.playlists = Playlists.sort trackCount
 
 ]
