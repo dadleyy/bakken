@@ -1,6 +1,10 @@
 # Bakken [![Build Status](https://travis-ci.org/dadleyy/bakken.svg?branch=master)](https://travis-ci.org/dadleyy/bakken)
 
-The personal website for a talented bassist. 
+The personal website for a talented bassist.
+
+## Beta
+
+The beta website can be seen here [beta](http://beta.bakken.fm)
 
 ## Releases
 
