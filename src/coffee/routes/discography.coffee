@@ -20,9 +20,9 @@ bakken.config ['$routeProvider', ($routeProvider) ->
         playlists.$promise
       ]
       analytics: ['Analytics', (Analytics) ->
-        Analytics.trackPage '/'
+        Analytics.trackPage '/discography'
       ]
 
-  $routeProvider.when '/', homeRoute
+  $routeProvider.when '/discography', homeRoute
 
 ]

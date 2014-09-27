@@ -4,14 +4,9 @@
   .playlist-container
     position: absolute
     width: 50%
-    left: 50%
-    .inner
+
+    > .inner
       position: relative
-    &:nth-child(odd)
-      > .inner
-        padding-left: 10px
-    &:nth-child(even)
-      left: 0%
-      > .inner
-        padding-right: 10px
-    
+      padding: 
+        right: 10px
+        left: 10px

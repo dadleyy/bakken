@@ -14,22 +14,33 @@ module.exports = function() {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-angular-templates');
-  grunt.loadNpmTasks('grunt-smash');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadTasks('tasks');
 
-  function jadeFiles(srcdir, destdir, wildcard) {
-    var path = require('path'),
-        files = {};
+  var vendor_libs = [
+        "bower_components/jquery/dist/jquery.min.js",
+        "bower_components/angular/angular.js",
+        "bower_components/angular-route/angular-route.js",
+        "bower_components/angular-resource/angular-resource.js",
+        "bower_components/soundmanager2/script/soundmanager2.js",
+        "bower_components/angular-google-analytics/dist/angular-google-analytics.js",
+        "inc/pixastic/pixastic.js"
+      ],
+      package_info = grunt.file.readJSON('package.json'),
+      package_banner = [
+        '/*!', 
+        '<%= pkg.name %>', 
+        'v<%= pkg.version %>', 
+        '[<%= pkg.commit %>]', 
+        '*/'
+      ].join(' ')
 
-    grunt.file.expand({cwd: srcdir}, wildcard).forEach(function(relpath) {
-      destname = relpath.replace(/\.jade$/ig,'.html');
-      files[path.join(destdir, destname)] = path.join(srcdir, relpath);
-    });
-
-    return files;
-  };
+  if(process.env['TRAVIS_COMMIT'])
+    package_info.commit = process.env['TRAVIS_COMMIT'];
 
   grunt.initConfig({
+
+    pkg: package_info,
 
     clean: {
       all: [
@@ -63,7 +74,13 @@ module.exports = function() {
             debug: true
           }
         },
-        files: jadeFiles('src/jade', 'obj/html', '**/*.jade')
+        files: [{
+          src: "**/*.jade",
+          dest: "obj/html",
+          expand: true,
+          ext: ".html",
+          cwd: "src/jade"
+        }]
       },
       release: {
         options: {
@@ -90,14 +107,34 @@ module.exports = function() {
       }
     },
 
-    smash: {
-      build: {
-        src: "build.js",
-        dest: "public/js/app.js"
+    concat: {
+      options: {
+        separator: '; \n'
+      },
+      dist: {
+        src: vendor_libs.concat([
+          "obj/js/app.js",
+          "obj/js/templates.js",
+          "obj/js/soundcloud.js",
+          "obj/js/google.js"
+        ]),
+        dest: 'public/js/app.js'
       }
     },
 
     copy: {
+      ionicons: {
+        expand: true,
+        cwd: 'bower_components/ionicons',
+        src: ['css/*', 'fonts/*'],
+        dest: 'public/vendor/ionicons'
+      },
+      zocial: {
+        expand: true,
+        cwd: 'bower_components/zocial/css',
+        src: '*',
+        dest: 'public/vendor/zocial'
+      },
       svg: {
         expand: true,
         cwd: 'src/svg',
@@ -121,11 +158,11 @@ module.exports = function() {
       },
       scripts: {
         files: ['src/coffee/**/*.coffee'],
-        tasks: ['coffee', 'smash']
+        tasks: ['coffee', 'concat']
       },
       templates: {
         files: ['src/jade/**/*.jade'],
-        tasks: ['jade:debug', 'copy:index', 'ngtemplates', 'smash']
+        tasks: ['jade:debug', 'copy:index', 'ngtemplates', 'concat']
       },
       sass: {
         files: ['src/sass/**/*.sass'],
@@ -161,6 +198,9 @@ module.exports = function() {
 
     uglify: {
       release: {
+        options: {
+          banner: package_banner
+        },
         files: {
           'public/js/app.min.js': ['public/js/app.js']
         }
@@ -169,7 +209,7 @@ module.exports = function() {
 
   });
   
-  grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'smash']);
+  grunt.registerTask('js', ['coffee', 'jade:debug', 'ngtemplates', 'keyfile', 'concat']);
   grunt.registerTask('css', ['sass']);
   grunt.registerTask('default', ['css', 'coffee', 'js', 'css', 'copy']);
   grunt.registerTask('release', ['default', 'jade:release', 'uglify']);

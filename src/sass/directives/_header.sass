@@ -1,14 +1,30 @@
 [rb-header], .header
   height: 60px
+
   .branding
     +span-columns(8)
+
     .title
       font-size: 60px
       line-height: 60px
+      color: lighten(black, 20)
+      font-family: $font-light
+      em
+        font-family: $font-thin
+      &:hover
+        text-shadow: none
+
   .links
     +span-columns(4)
     line-height: 60px
     text-align: right
-    a
-      margin-right: 10px
+
+    .icon
+      width: 50px
+      height: 50px
+
+      &:after
+        text-align: center
+        font-size: 25px
+        margin-right: 10px
 
