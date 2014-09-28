@@ -1,4 +1,4 @@
-bakken.directive 'rbDiscography', [() ->
+bakken.directive 'rbDiscography', ['Viewport', (Viewport) ->
 
   class Discography
 
@@ -34,6 +34,7 @@ bakken.directive 'rbDiscography', [() ->
     link: ($scope, $element, $attrs) ->
       active_playlist = null
       column_heights = [0, 0]
+      resized = false
 
       togglePlaylists = (evt, playlist) ->
         if active_playlist
@@ -55,23 +56,37 @@ bakken.directive 'rbDiscography', [() ->
 
         selected_index
 
+      resize = (window_width, window_height) ->
+        if window_width < 820
+          column_heights = [0]
+        else
+          column_heights = [0, 0]
+
       $scope.getPlaylistPosition = (playlist, index) ->
         style = { }
-        column = index % 2
+        column_count = column_heights.length
+        column = index % column_count
 
-        if index < 2
+        if index < column_count
           playlist.top = 0
           style.top = '0px'
-          style.left = if column % 2 == 0 then '50%' else '0%'
+          if column_count > 1
+            style.left = if column % column_count == 0 then '50%' else '0%'
+          else
+            style.left = '0%'
           column_heights[column] = getPlaylistHeight playlist
 
         else
           col_indx = getLowestColumn()
           col_bottom = column_heights[col_indx]
           style.top = [col_bottom, 'px'].join ''
-          style.left = if col_indx % 2 == 0 then '50%' else '0%'
+          if column_count > 1
+            style.left = if col_indx % column_count == 0 then '50%' else '0%'
+          else
+            style.left = '0%'
           column_heights[col_indx] += getPlaylistHeight playlist
 
+        style.width = (100 / column_count) + '%'
         style
 
       $scope.getDiscographyHeight = () ->
@@ -80,6 +95,8 @@ bakken.directive 'rbDiscography', [() ->
         max_height = Math.max.apply(null, heights)
         height: [max_height, 'px'].join ''
 
+
       $scope.$on 'playlistOpened', togglePlaylists
+      Viewport.addListener resize
 
 ]

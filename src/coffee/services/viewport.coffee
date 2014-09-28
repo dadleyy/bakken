@@ -1,4 +1,4 @@
-bakken.service 'Viewport', ['$window', 'Loop', ($window, Loop) ->
+bakken.service 'Viewport', ['$window', '$rootScope', 'Loop', ($window, $rootScope, Loop) ->
 
   resize_loop_id = null
   listeners = []
@@ -10,18 +10,20 @@ bakken.service 'Viewport', ['$window', 'Loop', ($window, Loop) ->
 
   $window.onresize = () ->
     if resize_loop_id == null
-      resize_loop_id = Loop.add Viewport.update
+      resize_loop_id = Loop.add update
 
     $window.clearTimeout stop_timeout
     stop_timeout = $window.setTimeout stopListening, 1000
 
+  update = () ->
+    width = $window.innerWidth
+    height = $window.innerHeight
+    listener width, height for listener in listeners
+    $rootScope.$digest()
+
   Viewport =
     addListener: (fn) ->
       listeners.push fn
-
-    update: () ->
-      for listener in listeners
-        listener()
-
+      fn $window.innerWidth, $window.innerHeight
 
 ]

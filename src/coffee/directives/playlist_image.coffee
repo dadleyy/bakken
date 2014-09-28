@@ -1,4 +1,4 @@
-bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q, Viewport) ->
+bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Drawing', 'Viewport', ($timeout, $q, Drawing, Viewport) ->
 
   image_cache = {}
 
@@ -15,26 +15,6 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
       images.push(cleanImageUrl(track.artwork_url)) for track in playlist.tracks
       images
 
-  drawImage = (active_image, width, height) ->
-    deffered = $q.defer()
-    render = (image_ele) ->
-      $(image_ele).pixastic("blurfast", {
-        amount: 3.0,
-      }).pixastic "hsl",
-        hue: 0
-        saturation: -90
-        lightness: -40
-
-    image_ele = new Image()
-    image_ele.width = width
-    image_ele.height = height
-    image_ele.src = active_image
-    image_ele.onload = () ->
-      render(image_ele)
-      deffered.resolve(image_ele)
-  
-    {promise: deffered.promise, image: image_ele}
-
   rbPlaylistImage =
     restrict: 'AE'
     replace: true
@@ -46,12 +26,16 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
     link: ($scope, $element, $attrs, playlistController) ->
       active_image = 0
       resize_timeout = null
+      canvas = document.createElement 'canvas'
+      context = canvas.getContext '2d'
+      $element.append canvas
       
       # playlists are only viewable after their images
       # are done being rendered into the canvas
-      makeViewable = (element) ->
+      makeViewable = () ->
         cb = () ->
-          playlistController.viewable(true)
+          playlistController.viewable true
+
         $timeout cb, (200 * $scope.order) + 400
 
       draw = () ->
@@ -59,9 +43,17 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
         image_urls = getPlaylistImageList playlist
         width = $element.outerWidth()
         height = $element.outerHeight()
-        data = drawImage image_urls[active_image], width, height
-        data.promise.then makeViewable
-        $element.append data.image
+
+        image = new Image()
+        image.src = image_urls[0]
+        image.onload = () ->
+          context.drawImage image, 0, 0, width, height
+          Drawing.blur canvas, 0, 0, width, height, 10, 2
+          Drawing.desaturate canvas, width, height
+          makeViewable()
+
+        canvas.width = width
+        canvas.height = height
 
       resize = () ->
         if resize_timeout != null
@@ -69,6 +61,6 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Viewport', ($timeout, $q
         resize_timeout = $timeout draw, 100
 
       timeout_id = $timeout draw
-      #Viewport.addListener resize
+      Viewport.addListener resize
 
 ]

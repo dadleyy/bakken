@@ -24,7 +24,6 @@ module.exports = function() {
         "bower_components/angular-resource/angular-resource.js",
         "bower_components/soundmanager2/script/soundmanager2.js",
         "bower_components/angular-google-analytics/dist/angular-google-analytics.js",
-        "inc/pixastic/pixastic.js"
       ],
       package_info = grunt.file.readJSON('package.json'),
       package_banner = [
