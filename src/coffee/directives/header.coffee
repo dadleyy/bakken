@@ -4,5 +4,9 @@ bakken.directive 'rbHeader', ['$timeout', ($timeout) ->
     replace: true
     templateUrl: 'directives.header'
     link: ($scope, $element, $attrs) ->
+      $scope.expanded = false
+
+      $scope.toggle = () ->
+        $scope.expanded = !$scope.expanded
 
 ]

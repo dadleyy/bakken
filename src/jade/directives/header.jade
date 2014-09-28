@@ -3,7 +3,8 @@
     .branding
       a.title(href="/") Ricky
         em Bakken
-    .links
+    .links(ng-class="{expanded: expanded}")
+      a.icon.ion.menu.expander(ng-click="toggle()" href="#")
       a.icon.soundcloud(href="https://soundcloud.com/rickybakken")
       a.icon.twitter(href="https://twitter.com/RBakk")
       a.icon.ion.resume(href="/resume")
