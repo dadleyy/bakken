@@ -95,3 +95,20 @@
       &.state
         background-position: center center
         background-image: url('/svg/pause.svg')
+
++media(max-width 820px)
+  [rb-track], .track
+    
+    > .pre 
+      display: block
+
+      .title
+        h2.track-title
+          +transform(translateY(-10px))
+
+      > .actions 
+
+        div.action-container
+          +transform(translateY(-15px))
+          opacity: 1.0
+
