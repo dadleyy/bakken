@@ -93,6 +93,7 @@
             content: ''
             background: white
             opacity: 0.0
+
           &.top
             &:after, &:before
               left: 50%
@@ -117,7 +118,7 @@
         display: table-cell
         vertical-align: middle
         .inner
-          padding: 0 40px
+          padding: 0 0
 
   .track-area
     position: relative
@@ -167,8 +168,20 @@
         +transform(translateY(0px) rotateX(0deg))
         opacity: 1.0
 
-  &:hover
+  +media(max-width 500px)
     .title-area
+      button.reveal
+        +transform(translateY(0px))
+        display: inline-block
+        opacity: 1.0
+        padding: 5px 10px
+        margin-top: 10px
+        border: 1px solid white
+
+  &:hover
+
+    .title-area
+
       .playlist-title
         color: $color-orange
 
