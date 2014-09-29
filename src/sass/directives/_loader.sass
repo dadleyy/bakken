@@ -19,11 +19,12 @@
     display: none
 
   .content
-    +transition(top 300ms ease)
+    +transition(bottom 300ms ease)
     position: absolute
-    bottom: -100px
+    bottom: 0px
     left: 0px
     width: 100%
+    bottom: -100px
     z-index: 3
     background: white
     box-shadow: 0px -1px 0px rgba(0,0,0,0.25)
@@ -31,15 +32,20 @@
     > .inner
       +outer-container
       padding: 10px 0
+
       .left
-        +span-columns(8)
+        overflow: hidden
+        height: auto
+
       .right
-        +span-columns(4)
-        +omega
+        float: right
 
   h3.load-text
     font-size: 28px
     line-height: 60px
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
 
     +media(max-width 1000px)
       font-size: 24px
