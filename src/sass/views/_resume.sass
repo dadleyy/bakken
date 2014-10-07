@@ -1,0 +1,64 @@
+.resume.view
+  display: block
+  text-align: center
+
+  h1
+    font-size: 28px
+    display: inline-block
+    border-bottom: 4px solid darken(white, 5)
+    padding: 5px 0
+    margin: 0 0 10px 0
+
+  h2.subtitle
+    font-size: 11px
+    text-transform: uppercase
+    margin: 10px 0
+    line-height: 16px
+
+    &:first-of-type
+      margin-top: 0
+
+  .section
+    margin: 0 0 20px 0
+
+  hr
+    width: 25%
+    margin: 0 auto
+    border: none
+    height: 1px
+    background: darken(white, 5)
+
+  table
+    width: 50%
+    margin: 0 auto
+
+    thead
+      display: none
+
+    thead th 
+      padding: 0 5px
+
+      p
+        padding: 5px 0
+        font-family: $font-regular
+        color: darken(white, 30)
+        border-bottom: 1px solid darken(white, 5)
+
+    tbody td
+      padding: 10px 0
+      font-size: 18px
+      color: lighten(black, 70)
+
+  .section.recording,
+  .section.performance
+    table tbody td:first-child
+      color: lighten(black, 40)
+
+  .section.education
+    table tbody td:nth-child(3)
+      color: lighten(black, 40)
+
+  .section.accomplishments
+    table tbody td:nth-child(2)
+      color: lighten(black, 40)
+
