@@ -12,7 +12,7 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Drawing', 'Viewport', ($
       [cleanImageUrl(playlist.artwork_url)]
     else
       images = []
-      images.push(cleanImageUrl(track.artwork_url)) for track in playlist.tracks
+      images.push(cleanImageUrl(track.artwork_url)) if track.artwork_url for track in playlist.tracks
       images
 
   rbPlaylistImage =
