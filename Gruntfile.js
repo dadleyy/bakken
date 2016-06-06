@@ -185,13 +185,13 @@ module.exports = function() {
         dest: "obj/js/soundcloud.js",
         module: "bakken",
         name: "SAK",
-        key: btoa(process.env['SOUNDCLOUD_KEY'])
+        key: btoa(process.env['SOUNDCLOUD_KEY'] || "xxxxxxxxxxxxx")
       },
       google: {
         dest: 'obj/js/google.js',
         module: false,
         name: 'GOOGLE_ANALYTICS',
-        key: btoa(process.env['GOOGLE_ANALYTICS_ID'])
+        key: btoa(process.env['GOOGLE_ANALYTICS_ID'] || "xxxxxxxxxxxxxxxxx")
       }
     },
 

@@ -46,11 +46,16 @@ bakken.directive 'rbPlaylistImage', ['$timeout', '$q', 'Drawing', 'Viewport', ($
 
         image = new Image()
         image.src = image_urls[0]
-        image.onload = () ->
+
+        image.onload = ->
           context.drawImage image, 0, 0, width, height
           Drawing.blur canvas, 0, 0, width, height, 10, 2
           Drawing.desaturate canvas, width, height
           makeViewable()
+
+        image.onerror = ->
+          makeViewable()
+
 
         canvas.width = width
         canvas.height = height

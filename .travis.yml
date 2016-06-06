@@ -11,8 +11,6 @@ install:
 - npm install
 script:
 - echo "building $TRAVIS_COMMIT"
-- echo "SOUNDCLOUD_KEY=$SOUNDCLOUD_KEY" > .env
-- echo "GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS" >> .env
 - grunt release
 after_success:
 - tar -cvzf "bakken-$TRAVIS_COMMIT.tar.gz" ./public/
