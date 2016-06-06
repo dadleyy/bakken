@@ -14,7 +14,5 @@ script:
 - grunt release
 after_success:
 - tar -cvzf "bakken-$TRAVIS_COMMIT.tar.gz" ./public/
-- curl --ftp-create-dirs -T "bakken-$TRAVIS_COMMIT.tar.gz" -u $FTP_USER:$FTP_PASS
-  "ftp://ftp.sizethreestudios.com/artifacts/bakken/$TRAVIS_COMMIT.tar.gz"
-- curl --ftp-create-dirs -T "bakken-$TRAVIS_COMMIT.tar.gz" -u $FTP_USER:$FTP_PASS
-  "ftp://ftp.sizethreestudios.com/artifacts/bakken/latest.tar.gz"
+- curl --ftp-create-dirs -T "bakken-$TRAVIS_COMMIT.tar.gz" -u $FTP_USER:$FTP_PASS "$FTP_PATH/$TRAVIS_COMMIT.tar.gz"
+- curl --ftp-create-dirs -T "bakken-$TRAVIS_COMMIT.tar.gz" -u $FTP_USER:$FTP_PASS "$FTP_PATH/latest.tar.gz"
